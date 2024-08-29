@@ -14,13 +14,19 @@ public:
 
     SudokuBoard(const SudokuBoard &other);
 
+    SudokuBoard(const SudokuBoard &initial, const SudokuBoard &parent1, const SudokuBoard &parent2,int mutate_percent = 0);
+
 private:
     int _board[9][9];
     std::array<std::bitset<9>, 9> _row_contains;
-    std::array<std::bitset<9>, 9> _col_contains;
+    std::array<std::bitset<9>, 9> _column_contains;
     std::array<std::bitset<9>, 9> _block_contains;
 
     int _empty_spaces = 81;
+
+
+
+    bool canBeFilled(int row, int col, int num);
 };
 
 
