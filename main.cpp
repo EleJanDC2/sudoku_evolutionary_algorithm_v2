@@ -36,13 +36,25 @@ int test3board[9][9] = {
     {0, 7, 9, 2, 0, 5, 0, 0, 0}
 };
 
+int test6board[9][9] = {
+    {9, 0, 0, 1, 0, 0, 0, 4, 0},
+    {0, 7, 0, 6, 0, 0, 3, 0, 9},
+    {0, 0, 0, 0, 3, 0, 0, 5, 0},
+    {0, 5, 0, 0, 0, 1, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 4},
+    {1, 0, 0, 0, 2, 0, 9, 0, 6},
+    {5, 0, 0, 0, 6, 0, 2, 0, 1},
+    {0, 0, 0, 0, 0, 0, 0, 3, 0},
+    {0, 0, 8, 7, 0, 0, 0, 0, 0}
+};
+
 int main() {
 
     std::random_device rd;
     std::mt19937 gen(rd());
 
 
-    SudokuBoard default_board(*test3board);
+    SudokuBoard default_board(*test6board);
 
     int current_generation = 1;
 
