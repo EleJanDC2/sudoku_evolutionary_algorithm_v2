@@ -12,6 +12,8 @@ class SudokuBoard {
 public:
     SudokuBoard(int * init_board);
 
+    SudokuBoard(const SudokuBoard &other);
+
 private:
     int _board[9][9];
     std::array<std::bitset<9>, 9> _row_contains;
