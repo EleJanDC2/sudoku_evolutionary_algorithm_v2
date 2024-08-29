@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <random>
 
 #include "SudokuBoard.h"
 
@@ -37,6 +38,10 @@ int test3board[9][9] = {
 
 int main() {
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+
     SudokuBoard default_board(*test3board);
 
     int current_generation = 1;
@@ -62,9 +67,9 @@ int main() {
     while(current_generation < MAX_GENERATIONS) {
         std::vector<SudokuBoard> NewGeneration;
         for(int i = 0; i < GENERATION_SIZE; i++) {
-            int parent1 = rand() % GENERATION_SIZE;
-            int parent2 = rand() % GENERATION_SIZE;
-            while(OldGeneration[parent1] == OldGeneration[parent2]) parent2 = rand() % GENERATION_SIZE;
+            int parent1 = std::uniform_int_distribution<>(0, GENERATION_SIZE-1)(gen);
+            int parent2 = std::uniform_int_distribution<>(0, GENERATION_SIZE-1)(gen);
+            while(OldGeneration[parent1] == OldGeneration[parent2]) parent2 = std::uniform_int_distribution<>(0, GENERATION_SIZE-1)(gen);
             SudokuBoard child(OldGeneration[parent1], OldGeneration[parent2], default_board, 10);
             NewGeneration.push_back(child);
         }

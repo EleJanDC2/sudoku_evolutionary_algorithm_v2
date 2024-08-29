@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <random>
 
 SudokuBoard::SudokuBoard(int *init_board) {
     std::copy(init_board, init_board + 81, &_board[0][0]);
@@ -34,6 +35,9 @@ SudokuBoard::SudokuBoard(const SudokuBoard &initial, const SudokuBoard &parent1,
     bool parent_turn = 0;
     const SudokuBoard *current_parrent = nullptr;
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
     // Try fill new board 'child' until we find a solution or we reach max number of attempts
     while (attempts < 100 && _empty_spaces > 0) {
         // Change parent turn
@@ -41,11 +45,11 @@ SudokuBoard::SudokuBoard(const SudokuBoard &initial, const SudokuBoard &parent1,
         current_parrent = parent_turn ? &parent1 : &parent2;
 
         //Choose random row and column
-        int row = rand() % 9;
-        int col = rand() % 9;
+        int row = std::uniform_int_distribution<>(0, 8)(gen);
+        int col = std::uniform_int_distribution<>(0, 8)(gen);
 
         int num = 0;
-        if (rand() % 100 < mutate_percent) num = rand() % 9 + 1;
+        if (std::uniform_int_distribution<>(0, 99)(gen) < mutate_percent) num = std::uniform_int_distribution<>(0, 8)(gen) + 1;
         else num = current_parrent->_board[row][col];
 
         if (current_parrent->_board[row][col] == 0) {
@@ -77,10 +81,13 @@ bool SudokuBoard::canBeFilled(int row, int col, int num) {
 void SudokuBoard::fillBoard() {
     int attempts = 0;
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
     while(attempts < 100 && _empty_spaces > 0) {
-        int row = rand() % 9;
-        int col = rand() % 9;
-        int num = rand() % 9 + 1;
+        int row = std::uniform_int_distribution<>(0, 8)(gen);
+        int col = std::uniform_int_distribution<>(0, 8)(gen);
+        int num = std::uniform_int_distribution<>(0, 8)(gen) + 1;
 
         if(canBeFilled(row, col, num)) {
             _board[row][col] = num;
