@@ -21,6 +21,8 @@ public:
     int get_empty_spaces() const { return _empty_spaces; }
 
     int printBoard();
+
+    bool operator==(const SudokuBoard &other) const;
 private:
     int _board[9][9];
     std::array<std::bitset<9>, 9> _row_contains;

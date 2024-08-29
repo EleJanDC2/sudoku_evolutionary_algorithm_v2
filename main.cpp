@@ -64,7 +64,7 @@ int main() {
         for(int i = 0; i < GENERATION_SIZE; i++) {
             int parent1 = rand() % GENERATION_SIZE;
             int parent2 = rand() % GENERATION_SIZE;
-            while(parent1 == parent2) parent2 = rand() % GENERATION_SIZE;
+            while(OldGeneration[parent1] == OldGeneration[parent2]) parent2 = rand() % GENERATION_SIZE;
             SudokuBoard child(OldGeneration[parent1], OldGeneration[parent2], default_board, 10);
             NewGeneration.push_back(child);
         }

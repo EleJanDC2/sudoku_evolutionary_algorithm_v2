@@ -103,3 +103,7 @@ int SudokuBoard::printBoard() {
     }
     return 0;
 }
+
+bool SudokuBoard::operator==(const SudokuBoard &other) const {
+    return std::equal(&_board[0][0], &_board[0][0] + 81, &other._board[0][0]);
+}
