@@ -23,9 +23,21 @@ int test1board[9][9] = {
     {0, 0, 0, 8, 2, 7, 9, 0, 0}
 };
 
+int test3board[9][9] = {
+    {9, 0, 2, 3, 0, 0, 8, 0, 1},
+    {0, 1, 5, 0, 0, 0, 3, 0, 0},
+    {4, 0, 7, 0, 0, 0, 0, 5, 6},
+    {0, 0, 8, 0, 0, 7, 1, 0, 2},
+    {0, 0, 0, 0, 2, 6, 5, 9, 0},
+    {0, 0, 0, 5, 8, 0, 0, 0, 4},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 2, 0, 6, 0, 0, 0, 0, 5},
+    {0, 7, 9, 2, 0, 5, 0, 0, 0}
+};
+
 int main() {
 
-    SudokuBoard default_board(*test1board);
+    SudokuBoard default_board(*test3board);
 
     int current_generation = 1;
 
@@ -45,6 +57,32 @@ int main() {
     //Show best from 1 generation
     std::cout << "Best: " << OldGeneration[0].get_empty_spaces() << std::endl;
     OldGeneration[0].printBoard();
+
+
+    while(current_generation < MAX_GENERATIONS) {
+        std::vector<SudokuBoard> NewGeneration;
+        for(int i = 0; i < GENERATION_SIZE; i++) {
+            int parent1 = rand() % GENERATION_SIZE;
+            int parent2 = rand() % GENERATION_SIZE;
+            while(parent1 == parent2) parent2 = rand() % GENERATION_SIZE;
+            SudokuBoard child(OldGeneration[parent1], OldGeneration[parent2], default_board, 10);
+            NewGeneration.push_back(child);
+        }
+
+        //Sort children for _empty_spaces
+        std::sort(NewGeneration.begin(), NewGeneration.end(), [](const SudokuBoard &a, const SudokuBoard &b) {
+            return a.get_empty_spaces() < b.get_empty_spaces();
+        });
+
+        //Show best from generation
+        std::cout << "Best: " << NewGeneration[0].get_empty_spaces() << std::endl;
+        NewGeneration[0].printBoard();
+
+        if(NewGeneration[0].get_empty_spaces() == 0) break;
+
+        OldGeneration = NewGeneration;
+        current_generation++;
+    }
 
 
     return 0;
