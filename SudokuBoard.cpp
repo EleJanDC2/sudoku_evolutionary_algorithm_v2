@@ -5,6 +5,7 @@
 #include "SudokuBoard.h"
 
 #include <algorithm>
+#include <iostream>
 
 SudokuBoard::SudokuBoard(int *init_board) {
     std::copy(init_board, init_board + 81, &_board[0][0]);
@@ -87,7 +88,18 @@ void SudokuBoard::fillBoard() {
             _row_contains[row].set(num - 1);
             _block_contains[row / 3 * 3 + col / 3].set(num - 1);
             _empty_spaces--;
-            break;
+            attempts = 0;
         } else attempts++;
     }
+}
+
+int SudokuBoard::printBoard() {
+
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            std::cout << _board[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+    return 0;
 }

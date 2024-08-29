@@ -17,6 +17,10 @@ public:
     SudokuBoard(const SudokuBoard &initial, const SudokuBoard &parent1, const SudokuBoard &parent2,int mutate_percent = 0);
 
     void fillBoard();
+
+    int get_empty_spaces() const { return _empty_spaces; }
+
+    int printBoard();
 private:
     int _board[9][9];
     std::array<std::bitset<9>, 9> _row_contains;
@@ -24,8 +28,6 @@ private:
     std::array<std::bitset<9>, 9> _block_contains;
 
     int _empty_spaces = 81;
-
-
 
     bool canBeFilled(int row, int col, int num);
 };
