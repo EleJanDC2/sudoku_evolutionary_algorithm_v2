@@ -10,7 +10,7 @@
 #include "SudokuBoard.h"
 
 #define MAX_GENERATIONS 100
-#define GENERATION_SIZE 100
+#define GENERATION_SIZE 1000
 
 int test1board[9][9] = {
     {0, 0, 0, 9, 6, 0, 5, 0, 4},
@@ -67,10 +67,10 @@ int main() {
     while(current_generation < MAX_GENERATIONS) {
         std::vector<SudokuBoard> NewGeneration;
         for(int i = 0; i < GENERATION_SIZE; i++) {
-            int parent1 = std::uniform_int_distribution<>(0, GENERATION_SIZE-1)(gen);
-            int parent2 = std::uniform_int_distribution<>(0, GENERATION_SIZE-1)(gen);
+            int parent1 = std::uniform_int_distribution<>(0, GENERATION_SIZE-1 / 10)(gen);
+            int parent2 = std::uniform_int_distribution<>(0, GENERATION_SIZE-1 / 10)(gen);
             while(OldGeneration[parent1] == OldGeneration[parent2]) parent2 = std::uniform_int_distribution<>(0, GENERATION_SIZE-1)(gen);
-            SudokuBoard child(OldGeneration[parent1], OldGeneration[parent2], default_board, 10);
+            SudokuBoard child(OldGeneration[parent1], OldGeneration[parent2], default_board, 0);
             NewGeneration.push_back(child);
         }
 
@@ -80,7 +80,7 @@ int main() {
         });
 
         //Show best from generation
-        std::cout << "Best: " << NewGeneration[0].get_empty_spaces() << std::endl;
+        std::cout << "GENERATION : " << current_generation <<  "    Best: " << NewGeneration[0].get_empty_spaces() << std::endl;
         NewGeneration[0].printBoard();
 
         if(NewGeneration[0].get_empty_spaces() == 0) break;
