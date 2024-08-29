@@ -72,3 +72,22 @@ bool SudokuBoard::canBeFilled(int row, int col, int num) {
 
     return true;
 }
+
+void SudokuBoard::fillBoard() {
+    int attempts = 0;
+
+    while(attempts < 100 && _empty_spaces > 0) {
+        int row = rand() % 9;
+        int col = rand() % 9;
+        int num = rand() % 9 + 1;
+
+        if(canBeFilled(row, col, num)) {
+            _board[row][col] = num;
+            _column_contains[col].set(num - 1);
+            _row_contains[row].set(num - 1);
+            _block_contains[row / 3 * 3 + col / 3].set(num - 1);
+            _empty_spaces--;
+            break;
+        } else attempts++;
+    }
+}

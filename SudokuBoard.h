@@ -16,6 +16,7 @@ public:
 
     SudokuBoard(const SudokuBoard &initial, const SudokuBoard &parent1, const SudokuBoard &parent2,int mutate_percent = 0);
 
+    void fillBoard();
 private:
     int _board[9][9];
     std::array<std::bitset<9>, 9> _row_contains;
